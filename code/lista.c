@@ -1,26 +1,49 @@
+#include "lista.h"
+#include "arvore.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 Lista* cria_lista(){
 
     Lista *l;
 
     l = (Lista *) malloc(sizeof(Lista));
     l->cabeca = (Nodo *) malloc(sizeof(Nodo));
-    l->cabeca->Tree = (Tree *) malloc(sizeof(Tree));
+    l->cabeca->personagem = (Tree *) malloc(sizeof(Tree));
     l->cabeca->prox = NULL;
     l->cabeca->ant = NULL;
 
     return l;
 }
 
-int vazia_lista(Lista* cabeca){
+int vazia_lista(Lista* l){
 
-    return(cabeca->cabeca == NULL);
+    return(l->cabeca == NULL);
 
 }
 
 void insere_lista(Lista* l, int posicao, Tree* personagem){
 
-    if(vazia_lista(l))
-        return;
+    if(vazia_lista(l)){
+      Nodo* insere = (Nodo*) malloc(sizeof(Nodo));
+      insere->personagem = personagem;
+      insere->ant=NULL;
+      insere->prox=NULL;
+      l->cabeca = insere;
+      printf("\n Inseri na cabeça da lista.\n");
+      return;
+    }
+
+
+    if(posicao==0){
+      Nodo* insere = (Nodo*) malloc(sizeof(Nodo));
+      insere->personagem = personagem;
+      insere->ant=NULL;
+      insere->prox=l->cabeca;
+      l->cabeca->ant = insere;
+      l->cabeca = insere;
+      return;
+    }
 
     Nodo* insere = (Nodo*) malloc(sizeof(Nodo));
     insere->personagem = personagem;
@@ -29,32 +52,33 @@ void insere_lista(Lista* l, int posicao, Tree* personagem){
     Nodo* atual = l->cabeca;
     int i=0;
 
-    for(i=0;i<posicao;i++){
+    for(i=0;i<posicao-1;i++){
         if(atual==NULL){
             return;
         }
         else{
-            atual=atual->proximo;
+            atual=atual->prox;
         }
     }
 
-    if(atual->ant=NULL){
-        insere->prox=atual;
-        atual->ant=insere;
+    if(atual->prox==NULL){
+        atual->prox = insere;
+        insere->ant = atual;
     }
     else{
-        insere->prox=atual;
-        insere->ant=atual->ant;
-        atual->ant->prox=insere;
-        atual->ant=insere;
+        insere->prox=atual->prox;
+        atual->prox->ant=insere;
+        insere->ant=atual;
+        atual->prox=insere;
     }
+    printf("\n\n Inseri em outra posição da lista.\n");
 
 }
-void remove_lista(Lista *l, int posicao){
+void remove_lista(Lista* l, int posicao){
 
     Nodo *l2 = l->cabeca;
 
-    if(vazia_lista(l2))
+    if(vazia_lista(l))
         return;
 
     for(int i=0; i < posicao; ++i)
@@ -85,11 +109,11 @@ void remove_lista(Lista *l, int posicao){
 
 void free_lista(Lista *l){
 
-    Nodo *aux = l->cabeca;
+    Nodo* aux = l->cabeca;
 
     while(aux != NULL)
     {
-        remove(l,0);
+        remove_lista(l,0);
         aux = l->cabeca;
     }
 }
