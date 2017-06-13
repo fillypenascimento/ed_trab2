@@ -19,7 +19,7 @@ int verifica_combinacoes(int** combinacoes, int posicao){
     return 0;
   }
 
-  else if(posicao>8){
+  else if(posicao>=8){
     for(i=4;i<posicao;i++){
       if(((combinacoes[i][0]==combinacoes[posicao][0]) && (combinacoes[i][1]==combinacoes[posicao][1])) ||
         ((combinacoes[i][0]==combinacoes[posicao][1]) && (combinacoes[i][1]==combinacoes[posicao][0]))){
@@ -47,42 +47,47 @@ void preenche_combinacoes(int** combinacoes){
   combinacoes[3][0] = 0;
   combinacoes[3][1] = 0;
 
+  int j;
   int i;
   srand(time(NULL));
 
-  int j = rand()%4;
-  int verifica = 0;
-
+  int verifica = 1;
   for(i=4;i<8;i++){
 
-    combinacoes[i][0] = j;
-    j = rand()%4;
-    combinacoes[i][1] = j;
+    while(verifica != 0){
+      combinacoes[i][0] = rand()%4;
+      combinacoes[i][1] = rand()%4;
 
-    while((j==combinacoes[i][0]) || (verifica != 0)){
-      j = rand()%4;
-      verifica = verifica_combinacoes(combinacoes,i);
+      j=verifica_combinacoes(combinacoes, i);
+      if((combinacoes[i][0]==combinacoes[i][1]) || j==1){
+        verifica = 1;
+      }
+      else{
+        verifica = 0;
+      }
     }
+    verifica = 1;
 
-    combinacoes[i][1] = j;
   }
 
 
-  j = rand()%8;
-  verifica = 0;
-
+  verifica = 1;
   for(i=8;i<16;i++){
 
-    combinacoes[i][0] = j;
-    j = rand()%8;
-    combinacoes[i][1] = j;
+    while(verifica != 0){
+      combinacoes[i][0] = rand()%8;
+      combinacoes[i][1] = rand()%8;
 
-    while((j==combinacoes[i][0]) || (verifica != 0)){
-      j = rand()%8;
-      verifica = verifica_combinacoes(combinacoes,i);
+      j=verifica_combinacoes(combinacoes, i);
+      if((combinacoes[i][0]==combinacoes[i][1]) || j==1){
+        verifica = 1;
+      }
+      else{
+        verifica = 0;
+      }
     }
+    verifica = 1;
 
-    combinacoes[i][1] = j;
   }
 
   for(i=0;i<16;i++){
