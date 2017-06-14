@@ -32,12 +32,29 @@ int main(){
 	/*Criamos uma arvore de personagem para testes */
 	/*Lembre-se que ela recebe o id do personagem */
 
+	Tree* personagem;
+	for(i=0;i<4;i++){
+		personagem = cria_arvore_personagem(i);
+		insere(personagem,NULL);
+		insere_lista(l, 	posicao_lista, personagem);
+		posicao_lista++;
+		imprime_arvore(personagem);
+		imprime_personagem(personagem);
+	}
+
+	//for(i=4;i<16;i++){
+		personagem = cria_arvore_personagem(i);
+		seleciona_pais(personagem, l, combinacoes, i);
+		insere_lista(l, posicao_lista, personagem);
+		imprime_arvore(personagem);
+	//}
+
+	/*
 	//Personagem Aleatório 1
-	Tree* personagem1 = cria_arvore_personagem(0);
-	insere(personagem1,NULL);
-	insere_lista(l, posicao_lista, personagem1);
-	posicao_lista++;
-	imprime_arvore(personagem1);
+	Tree* personagem1 = cria_arvore_personagem(1);
+	insere(personagem1,NULL
+	insere_lista(l, 	posicao_lista, personagem1);
+	posicao_lista++;imprime_arvore(personagem1);
 	imprime_personagem(personagem1);
 
 	//Personagem Aleatório 2
@@ -63,6 +80,9 @@ int main(){
 	posicao_lista++;
 	imprime_arvore(personagem4);
 	imprime_personagem(personagem4);
+	*/
+	//Personagem 5
+
 
 	//printf("\nO personagem impresso graficamente nao corresponde ao personagem vazio impresso de forma textual");
 	printf("\n\n");

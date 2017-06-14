@@ -8,10 +8,7 @@ Lista* cria_lista(){
     Lista *l;
 
     l = (Lista *) malloc(sizeof(Lista));
-    l->cabeca = (Nodo *) malloc(sizeof(Nodo));
-    l->cabeca->personagem = (Tree *) malloc(sizeof(Tree));
-    l->cabeca->prox = NULL;
-    l->cabeca->ant = NULL;
+    l->cabeca = NULL;
 
     return l;
 }

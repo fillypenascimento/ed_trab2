@@ -1,3 +1,7 @@
+#ifndef LISTA_H
+#define LISTA_H
+
+
 /*Assinaturas das funções de manipulação da lista*/
 #include "arvore.h"
 
@@ -16,3 +20,6 @@ int vazia_lista(Lista* l);
 void insere_lista(Lista* l, int posicao, Tree* personagem);
 void remove_lista(Lista *l, int posicao);
 void free_lista(Lista *l);
+
+
+#endif
