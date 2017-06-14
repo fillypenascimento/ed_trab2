@@ -27,7 +27,7 @@ void insere_lista(Lista* l, int posicao, Tree* personagem){
       insere->ant=NULL;
       insere->prox=NULL;
       l->cabeca = insere;
-      printf("\n Inseri na cabeça da lista.\n");
+      //printf("\n Inseri na cabeça da lista.\n");
       return;
     }
 
@@ -68,7 +68,7 @@ void insere_lista(Lista* l, int posicao, Tree* personagem){
         insere->ant=atual;
         atual->prox=insere;
     }
-    printf("\n\n Inseri em outra posição da lista.\n");
+    //printf("\n\n Inseri em outra posição da lista.\n");
 
 }
 void remove_lista(Lista* l, int posicao){

@@ -13,10 +13,15 @@ int verifica_combinacoes(int**, int);
 Tree* seleciona_pais(Tree*, Lista*, int**, int);
 Tree* busca(Lista*, int);
 void cruzamento(Tree*, Tree*, Tree*);
+void imprime(Tree*);
+
+void mutacao_cor(Tree*);
+Genetica* seleciona_cor_olhos(Tree*, Tree*);
 
 Genetica* seleciona_tipo_olhos(Tree*, Tree*);
 void mutacao_olhos_tipo(Tree*);
 
+Genetica* seleciona_cor_cabelos(Tree*, Tree*);
 Genetica* seleciona_tipo_cabelos(Tree*, Tree*);
 void mutacao_cabelos_tipo(Tree*);
 

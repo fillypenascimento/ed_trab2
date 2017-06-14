@@ -2,15 +2,187 @@
 #include "lista.h"
 #include "criador.h"
 #include "arvore.h"
+#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 //Tentando criar agora o meu código
 
+void imprime(Tree *personagem){
 
+    if(personagem == NULL)
+        return;
+    if(personagem->left == NULL && personagem->right == NULL)
+        return;
 
+        if(strcmp(personagem->info->carac,"formato") == 0)
+        {
+            printf("formato: ");
 
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->id <= personagem->right->info->id)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+
+        }
+        else if(strcmp(personagem->info->carac,"cor") == 0 && personagem->left->info->dom <= 4)
+        {
+            printf("olhos cor: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else if(strcmp(personagem->info->carac,"cor") == 0 && personagem->left->info->dom >= 7)
+        {
+            printf("cabelos cor: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else if(strcmp(personagem->info->carac,"camisa") == 0)
+        {
+            printf("camisa: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else if(strcmp(personagem->info->carac,"tipo") == 0)
+        {
+            printf("tipo: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else if(strcmp(personagem->info->carac,"calcas") == 0)
+        {
+            printf("membros calcas: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else if(strcmp(personagem->info->carac,"botas") == 0)
+        {
+            printf("botas: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else if(strcmp(personagem->info->carac,"raca") == 0)
+        {
+            printf("tronco raca: ");
+
+            if(personagem->info->mutante == 1)
+                printf("MUTANTE ");
+
+            if(personagem->left->info->dom <= personagem->right->info->dom)
+                printf("%s\n",personagem->left->info->carac);
+            else
+                printf("%s\n",personagem->right->info->carac);
+        }
+        else
+        {
+            if(strcmp(personagem->info->carac,"personagem") == 0)
+                printf("-Identificacao: %d--Pai: %d--Mae: %d-----\n",personagem->info->id,personagem->info->pai,personagem->info->mae);
+
+            imprime(personagem->left);
+            imprime(personagem->right);
+        }
+}
+/*-----------------------------------------------------------------------------------------------------*/
+void mutacao_cor(Tree* personagem){
+  if(strcmp(personagem->info->carac,"cor")!=0 && personagem->left != NULL){
+    mutacao_cor(personagem->left);
+    mutacao_cor(personagem->right);
+  }
+  if(strcmp(personagem->info->carac,"cor")==0){
+    if(personagem->left->info->dom <= 4){
+      personagem->left->info = cria_tipo_olhos();
+      personagem->right->info = cria_tipo_olhos();
+      personagem->info->mutante = 1;
+    }
+    else{
+      personagem->left->info = cria_cor_cabelos();
+      personagem->right->info = cria_cor_cabelos();
+      personagem->info->mutante = 1;
+    }
+  }
+}
+/*-----------------------------------------------------------------------------------------------------*/
+Genetica* seleciona_cor_olhos(Tree* personagem, Tree* pai){
+  if((strcmp(personagem->info->carac,"cor")!=0) && personagem->left != NULL){
+    seleciona_cor_olhos(personagem->left, pai->left);
+    seleciona_cor_olhos(personagem->right, pai->right);
+  }
+  if(strcmp(personagem->info->carac,"cor")==0){
+    if(pai->left->info->dom <= 4){
+
+      if(pai->left->info->dom < pai->right->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->left->info;
+        }
+        else{
+            personagem->right->info = pai->left->info;
+        }
+
+      }
+      else if(pai->right->info->dom < pai->left->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->right->info;
+        }
+        else{
+            personagem->right->info = pai->right->info;
+        }
+
+      }
+      else{
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->right->info;
+        }
+        else{
+            personagem->right->info = pai->right->info;
+        }
+
+      }
+    }
+  }
+}
 /*-----------------------------------------------------------------------------------------------------*/
 void mutacao_olhos_tipo(Tree* personagem){
   if(strcmp(personagem->info->carac,"formato")!=0 && personagem->left != NULL){
@@ -110,6 +282,48 @@ Genetica* seleciona_tipo_cabelos(Tree* personagem, Tree* pai){
         personagem->right->info = pai->right->info;
       }
 
+    }
+  }
+}
+/*-----------------------------------------------------------------------------------------------------*/
+Genetica* seleciona_cor_cabelos(Tree* personagem, Tree* pai){
+  if((strcmp(personagem->info->carac,"cor")!=0) && personagem->left != NULL){
+    seleciona_cor_cabelos(personagem->left, pai->left);
+    seleciona_cor_cabelos(personagem->right, pai->right);
+  }
+  if(strcmp(personagem->info->carac,"cor")==0){
+    if(pai->left->info->dom >= 7){
+
+      if(pai->left->info->dom < pai->right->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->left->info;
+        }
+        else{
+            personagem->right->info = pai->left->info;
+        }
+
+      }
+      else if(pai->right->info->dom < pai->left->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->right->info;
+        }
+        else{
+            personagem->right->info = pai->right->info;
+        }
+
+      }
+      else{
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->right->info;
+        }
+        else{
+            personagem->right->info = pai->right->info;
+        }
+
+      }
     }
   }
 }
@@ -217,11 +431,11 @@ Genetica* seleciona_botas_pernas(Tree* personagem, Tree* pai){
 }
 /*-----------------------------------------------------------------------------------------------------*/
 void mutacao_tronco_raca(Tree* personagem){
-  if(strcmp(personagem->info->carac,"tronco")!=0 && personagem->left != NULL){
+  if(strcmp(personagem->info->carac,"raca")!=0 && personagem->left != NULL){
     mutacao_tronco_raca(personagem->left);
     mutacao_tronco_raca(personagem->right);
   }
-  if(strcmp(personagem->info->carac,"tronco")==0){
+  if(strcmp(personagem->info->carac,"raca")==0){
     personagem->left->info = cria_raca_tronco();
     personagem->right->info = cria_raca_tronco();
     personagem->info->mutante = 1;
@@ -322,18 +536,34 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
   int i;
   srand(time(NULL));
 
+  seleciona_cor_olhos(personagem->left, pai->left);
+  seleciona_cor_olhos(personagem->left, mae->left);
+  i=rand()%101;
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
+  if(i<=20){
+    mutacao_cor(personagem->left);
+  }
+
   seleciona_tipo_olhos(personagem->left, pai->left);
   seleciona_tipo_olhos(personagem->left, mae->left);
   i=rand()%101;
-  printf("\n\nprobabilidade de mutação: %d\n", i);
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
     mutacao_olhos_tipo(personagem->left);
+  }
+
+  seleciona_cor_cabelos(personagem->left, pai->left);
+  seleciona_cor_cabelos(personagem->left, mae->left);
+  i=rand()%101;
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
+  if(i<=20){
+    mutacao_cor(personagem->left);
   }
 
   seleciona_tipo_cabelos(personagem->left, pai->left);
   seleciona_tipo_cabelos(personagem->left, mae->left);
   i=rand()%101;
-  printf("\n\nprobabilidade de mutação: %d\n", i);
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
     mutacao_cabelos_tipo(personagem->left);
   }
@@ -341,7 +571,7 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
   seleciona_calca_pernas(personagem->right, pai->right);
   seleciona_calca_pernas(personagem->right, mae->right);
   i=rand()%101;
-  printf("\n\nprobabilidade de mutação: %d\n", i);
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
     mutacao_pernas_calca(personagem->right);
   }
@@ -349,7 +579,7 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
   seleciona_botas_pernas(personagem->right, pai->right);
   seleciona_botas_pernas(personagem->right, mae->right);
   i=rand()%101;
-  printf("\n\nprobabilidade de mutação: %d\n", i);
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
     mutacao_pernas_botas(personagem->right);
   }
@@ -357,7 +587,7 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
   seleciona_raca_tronco(personagem->right, pai->right);
   seleciona_raca_tronco(personagem->right, mae->right);
   i=rand()%101;
-  printf("\n\nprobabilidade de mutação: %d\n", i);
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
     mutacao_tronco_raca(personagem->right);
   }
@@ -365,7 +595,7 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
   seleciona_camisa_tronco(personagem->right, pai->right);
   seleciona_camisa_tronco(personagem->right, mae->right);
   i=rand()%101;
-  printf("\n\nprobabilidade de mutação: %d\n", i);
+  //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
     mutacao_tronco_camisa(personagem->right);
   }
@@ -393,9 +623,9 @@ Tree* busca(Lista* l, int posicao){
 /*-----------------------------------------------------------------------------------------------------*/
 Tree* seleciona_pais(Tree* personagem, Lista* l, int** combinacoes, int posicao){
   int pai_pos = combinacoes[posicao][0];
-  personagem->info->pai = combinacoes[posicao][0];
+  personagem->info->pai = combinacoes[posicao][0]+1;
   int mae_pos = combinacoes[posicao][1];
-  personagem->info->mae = combinacoes[posicao][1];
+  personagem->info->mae = combinacoes[posicao][1]+1;
 
   Tree* pai = busca(l, pai_pos);
   Tree* mae = busca(l, mae_pos);
@@ -487,9 +717,9 @@ void preenche_combinacoes(int** combinacoes){
 
   }
 
-  for(i=0;i<16;i++){
+  /*for(i=0;i<16;i++){
     printf("\nPai: %d,  Mae: %d\n", combinacoes[i][0], combinacoes[i][1]);
-  }
+  }*/
 
   printf("\nFIM\n");
 
@@ -578,98 +808,3 @@ void insere(Tree *nodo, Tree*nodo2){
 
 }
 /*-----------------------------------------------------------------------------------------------------*/
-
-/*Tree* cruzamento(Tree *pai, Tree *mae){
-
-    int i = 0;
-    Nodo* atual = l->cabeca;
-    while(atual!=NULL){
-      atual = atual->proximo;
-      i++;
-    }
-    int j;
-  	srand(time(NULL));
-  	j=rand()%(i+1);
-  	printf("Número aleatório: %d.\n", j);
-
-
-
-    if(pai->left == NULL && pai->right == NULL)
-        return;
-
-    /*
-    if(strcmp(pai->info->carac,"cabelos") == 0 || strcmp(pai->info->carac,"olhos") == 0)
-        Nodo* no = pai;
-    */
-/*
-    if(strcmp(pai->left->info->carac,"VAZIO") == 0 && strcmp(pai->right->info->carac,"VAZIO") == 0)
-    {
-        Genetica *genetic1, *genetic2;
-
-        if(strcmp(pai->info->carac,"formato") == 0)
-        {
-            genetic1 = seleciona_tipo_olhos(pai->left);
-            genetic2 = seleciona_tipo_olhos(mae);
-            pai->left->info = genetic1;
-            pai->right->info = genetic2;
-        }
-        else if(strcmp(pai->info->carac,"cor") == 0)
-        {
-            if(strcmp(mae->info->carac,"cabelos") == 0)
-            {
-                genetic1 = seleciona_cor_cabelos(pai);
-                genetic2 = seleciona_cor_cabelos(mae);
-                pai->left->info = genetic1;
-                pai->right->info = genetic2;
-            }
-            else if(strcmp(mae->info->carac,"olhos") == 0)
-            {
-                genetic1 = seleciona_cor_olhos(pai);
-                genetic2 = seleciona_cor_olhos(mae);
-                pai->left->info = genetic1;
-                pai->right->info = genetic2;
-            }
-        }
-        else if(strcmp(pai->info->carac,"camisa") == 0)
-        {
-            genetic1 = seleciona_camisa_tronco(pai);
-            genetic2 = seleciona_camisa_tronco(mae);
-            pai->left->info = genetic1;
-            pai->right->info = genetic2;
-        }
-        else if(strcmp(pai->info->carac,"tipo") == 0)
-        {
-            genetic1 = seleciona_tipo_cabelos(pai);
-            genetic2 = seleciona_tipo_cabelos(mae);
-            pai->left->info = genetic1;
-            pai->right->info = genetic2;
-        }
-        else if(strcmp(pai->info->carac,"calcas") == 0)
-        {
-            genetic1 = seleciona_calca_membros(pai);
-            genetic2 = seleciona_calca_membros(mae);
-            pai->left->info = genetic1;
-            pai->right->info = genetic2;
-        }
-        else if(strcmp(pai->info->carac,"botas") == 0)
-        {
-            genetic1 = seleciona_botas_membros(pai);
-            genetic2 = seleciona_botas_membros(mae);
-            pai->left->info = genetic1;
-            pai->right->info = genetic2;
-        }
-        else if(strcmp(pai->info->carac,"raca") == 0)
-        {
-            genetic1 = seleciona_raca_tronco(pai);
-            genetic2 = seleciona_raca_tronco(mae);
-            pai->left->info = genetic1;
-            pai->right->info = genetic2;
-        }
-    }
-    else
-    {
-        insere_filho(pai->left,pai);
-        insere_filho(pai->right,pai);
-    }
-
-}*/
