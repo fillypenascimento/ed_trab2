@@ -129,12 +129,12 @@ void mutacao_cor(Tree* personagem){
     mutacao_cor(personagem->right);
   }
   if(strcmp(personagem->info->carac,"cor")==0){
-    if(personagem->left->info->dom <= 4){
-      personagem->left->info = cria_tipo_olhos();
-      personagem->right->info = cria_tipo_olhos();
+    if(personagem->left->info->dom <= 4 && personagem->right->info->dom <= 4){
+      personagem->left->info = cria_cor_olhos();
+      personagem->right->info = cria_cor_olhos();
       personagem->info->mutante = 1;
     }
-    else{
+    else if(personagem->left->info->dom >=7 && personagem->right->info->dom >=7){
       personagem->left->info = cria_cor_cabelos();
       personagem->right->info = cria_cor_cabelos();
       personagem->info->mutante = 1;
@@ -142,13 +142,13 @@ void mutacao_cor(Tree* personagem){
   }
 }
 /*-----------------------------------------------------------------------------------------------------*/
-Genetica* seleciona_cor_olhos(Tree* personagem, Tree* pai){
+Genetica* seleciona_cor(Tree* personagem, Tree* pai){
   if((strcmp(personagem->info->carac,"cor")!=0) && personagem->left != NULL){
-    seleciona_cor_olhos(personagem->left, pai->left);
-    seleciona_cor_olhos(personagem->right, pai->right);
+    seleciona_cor(personagem->left, pai->left);
+    seleciona_cor(personagem->right, pai->right);
   }
-  if(strcmp(personagem->info->carac,"cor")==0){
-    if(pai->left->info->dom <= 4){
+  else if(strcmp(personagem->info->carac,"cor")==0){
+    if(pai->left->info->dom <= 4 && pai->right->info->dom <=4){
 
       if(pai->left->info->dom < pai->right->info->dom){
 
@@ -170,7 +170,41 @@ Genetica* seleciona_cor_olhos(Tree* personagem, Tree* pai){
         }
 
       }
-      else{
+      else if(pai->right->info->dom == pai->left->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->right->info;
+        }
+        else{
+            personagem->right->info = pai->right->info;
+        }
+
+      }
+    }
+
+    else if(pai->left->info->dom >= 7 && pai->right->info->dom >=7){
+
+      if(pai->left->info->dom < pai->right->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->left->info;
+        }
+        else{
+            personagem->right->info = pai->left->info;
+        }
+
+      }
+      else if(pai->right->info->dom < pai->left->info->dom){
+
+        if(personagem->left->info->dom == 0){
+            personagem->left->info = pai->right->info;
+        }
+        else{
+            personagem->right->info = pai->right->info;
+        }
+
+      }
+      else if(personagem->left->info->dom == personagem->right->info->dom){
 
         if(personagem->left->info->dom == 0){
             personagem->left->info = pai->right->info;
@@ -285,14 +319,14 @@ Genetica* seleciona_tipo_cabelos(Tree* personagem, Tree* pai){
     }
   }
 }
-/*-----------------------------------------------------------------------------------------------------*/
-Genetica* seleciona_cor_cabelos(Tree* personagem, Tree* pai){
+/*-----------------------------------------------------------------------ffff--------------------------*/
+/*Genetica* seleciona_cor_cabelos(Tree* personagem, Tree* pai){
   if((strcmp(personagem->info->carac,"cor")!=0) && personagem->left != NULL){
     seleciona_cor_cabelos(personagem->left, pai->left);
     seleciona_cor_cabelos(personagem->right, pai->right);
   }
   if(strcmp(personagem->info->carac,"cor")==0){
-    if(pai->left->info->dom >= 7){
+    if(pai->left->info->dom >= 7 && pai->right->info->dom >=7){
 
       if(pai->left->info->dom < pai->right->info->dom){
 
@@ -314,7 +348,7 @@ Genetica* seleciona_cor_cabelos(Tree* personagem, Tree* pai){
         }
 
       }
-      else{
+      else if(personagem->left->info->dom == personagem->right->info->dom){
 
         if(personagem->left->info->dom == 0){
             personagem->left->info = pai->right->info;
@@ -326,7 +360,7 @@ Genetica* seleciona_cor_cabelos(Tree* personagem, Tree* pai){
       }
     }
   }
-}
+}*/
 /*-----------------------------------------------------------------------------------------------------*/
 void mutacao_pernas_calca(Tree* personagem){
   if(strcmp(personagem->info->carac,"calcas")!=0 && personagem->left != NULL){
@@ -536,8 +570,8 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
   int i;
   srand(time(NULL));
 
-  seleciona_cor_olhos(personagem->left, pai->left);
-  seleciona_cor_olhos(personagem->left, mae->left);
+  seleciona_cor(personagem->left, pai->left);
+  seleciona_cor(personagem->left, mae->left);
   i=rand()%101;
   //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
@@ -552,8 +586,8 @@ void cruzamento(Tree* personagem, Tree* pai, Tree* mae){
     mutacao_olhos_tipo(personagem->left);
   }
 
-  seleciona_cor_cabelos(personagem->left, pai->left);
-  seleciona_cor_cabelos(personagem->left, mae->left);
+  seleciona_cor(personagem->left, pai->left);
+  seleciona_cor(personagem->left, mae->left);
   i=rand()%101;
   //printf("\n\nprobabilidade de mutação: %d\n", i);
   if(i<=20){
@@ -716,12 +750,6 @@ void preenche_combinacoes(int** combinacoes){
     verifica = 1;
 
   }
-
-  /*for(i=0;i<16;i++){
-    printf("\nPai: %d,  Mae: %d\n", combinacoes[i][0], combinacoes[i][1]);
-  }*/
-
-  printf("\nFIM\n");
 
 }
 /*-----------------------------------------------------------------------------------------------------*/

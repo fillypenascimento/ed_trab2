@@ -12,7 +12,7 @@
 
 int main(){
 
-	Lista* l = (Lista*) malloc(sizeof(Lista));
+	Lista* l = cria_lista();
 	int** combinacoes = (int**) malloc(16*sizeof(int*));
 	preenche_combinacoes(combinacoes);
 
@@ -23,9 +23,6 @@ int main(){
 	i=rand()%5;
 	printf("Número aleatório: %d.\n", i);*/
 
-	/*Criamos uma arvore de personagem para testes */
-	/*Lembre-se que ela recebe o id do personagem */
-
 	Tree* personagem;
 	for(i=0;i<4;i++){
 		personagem = cria_arvore_personagem(i+1);
@@ -33,9 +30,8 @@ int main(){
 		insere_lista(l, posicao_lista, personagem);
 		posicao_lista++;
 		imprime(personagem);
-		imprime_personagem(personagem);
+		//imprime_personagem(personagem);
 		printf("\n\n");
-		personagem = NULL;
 	}
 
 	for(i=4;i<16;i++){
@@ -44,10 +40,26 @@ int main(){
 		insere_lista(l, posicao_lista, personagem);
 		posicao_lista++;
 		imprime(personagem);
-		imprime_personagem(personagem);
+		//imprime_personagem(personagem);
 		printf("\n\n");
-		personagem = NULL;
 	}
+
+	for(i=0;i<16;i++){
+		free(combinacoes[i]);
+		printf("\nLiberei a combinação %d\n", i);
+	}
+	free(combinacoes);
+	printf("\nLiberei o vetor de combinacoes. %d\n", i);
+
+	Nodo* atual = l->cabeca;
+
+	for(i=0;i<16 && (atual!=NULL);i++){
+		tree_free(atual->personagem);
+		printf("\nLiberei o personagem %d\n", i);
+		atual=atual->prox;
+	}
+
+	free_lista(l);
 
 
 	printf("\n\n");
