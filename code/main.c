@@ -10,63 +10,76 @@
 
 //oi
 
+/*função para liberar a arvore de um personagem*/
+void free_personagem(Tree* personagem){
+	if(personagem->left != NULL && personagem->right != NULL){
+			free_personagem(personagem->left);
+			free_personagem(personagem->right);
+	}
+	else{
+		free(personagem);
+	}
+}
+
+/*função principal*/
 int main(){
 
-	Lista* l = cria_lista();
-	int** combinacoes = (int**) malloc(16*sizeof(int*));
-	preenche_combinacoes(combinacoes);
+	Lista* l = cria_lista();		/*ponteiro que recebe a lista vazia criada pela funcao cria_lista*/
+	int** combinacoes = (int**) malloc(16*sizeof(int*));    /*vetor de ponteiros para inteiros que armazenará as combinações já feitas*/
+	preenche_combinacoes(combinacoes);				/*função que preenche o vetor de combinações*/
 
 	int posicao_lista=0;
 	int i;
-	/*int i;
-	srand(time(NULL));
-	i=rand()%5;
-	printf("Número aleatório: %d.\n", i);*/
 
+
+	/*preenchimeto dos 4 personagens primordiais*/
 	Tree* personagem;
 	for(i=0;i<4;i++){
-		personagem = cria_arvore_personagem(i+1);
-		insere(personagem,NULL);
-		insere_lista(l, posicao_lista, personagem);
+		personagem = cria_arvore_personagem(i+1);			/*cria a arvore do personagem*/
+		insere(personagem,NULL);											/*funcao que insere as caracteristicas aleatorias nos nos folhas*/
+		insere_lista(l, posicao_lista, personagem);		/*funcao que insere o personagem na lista*/
 		posicao_lista++;
-		imprime(personagem);
-		//imprime_personagem(personagem);
+		imprime(personagem);													/*funcao que imprime a arvore do personagem*/
+		//imprime_personagem(personagem);							/*funcao que imprime o personagem graficamente*/
 		printf("\n\n");
+		getchar();
 	}
 
+
+	/*funcao para os personagens frutos do cruzamento de outros dois personagens*/
 	for(i=4;i<16;i++){
-		personagem = cria_arvore_personagem(i+1);
-		seleciona_pais(personagem, l, combinacoes, i);
-		insere_lista(l, posicao_lista, personagem);
+		personagem = cria_arvore_personagem(i+1);				/*cria a arvore do personagem*/
+		seleciona_pais(personagem, l, combinacoes, i);	/*seleciona os pais do personagem e faz o cruzamento*/
+		insere_lista(l, posicao_lista, personagem);			/*funcao que insere o personagem na lista*/
 		posicao_lista++;
-		imprime(personagem);
-		//imprime_personagem(personagem);
+		imprime(personagem);														/*funcao que imprime a arvore do personagem*/
+		//imprime_personagem(personagem);								/*funcao que imprime o personagem graficamente*/
 		printf("\n\n");
+		getchar();
 	}
 
+	/*loop para liberar a matriz de combinacoes*/
 	for(i=0;i<16;i++){
 		free(combinacoes[i]);
-		printf("\nLiberei a combinação %d\n", i);
 	}
 	free(combinacoes);
-	printf("\nLiberei o vetor de combinacoes. %d\n", i);
 
 	Nodo* atual = l->cabeca;
 
-	for(i=0;i<16 && (atual!=NULL);i++){
-		tree_free(atual->personagem);
-		printf("\nLiberei o personagem %d\n", i);
+
+	/*loop para liberar todos os prsonagens da lista*/
+ 	i=1;
+	while(atual!=NULL && atual->personagem != NULL){
+		free_personagem(atual->personagem);							/*funcao que libera a arvore do personagem*/
+		atual->personagem = NULL;
+		i++;
 		atual=atual->prox;
 	}
 
-	free_lista(l);
+	free_lista(l);						/*funcao que libera a lista duplamente encadeada*/
 
 
 	printf("\n\n");
 
-
-
-	/*Caso queira testar a biblioteca grafica */
-	//imprime_personagem_aleatorio();
     return 0;
 }
