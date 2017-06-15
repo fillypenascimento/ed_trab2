@@ -1,3 +1,18 @@
+/*Universidade de Brasília - UnB
+Instituto de Ciências Exatas (IE)
+Departamento de Ciência da Computação (CIC)
+Disciplina - 116319 - Estrutura de Dados - Turma F
+Aluno: Fillype Alves do Nascimento
+Matrícula: 16/0070431
+Aluno: Pedro Kelvin de Castro Moreira Batista
+Matrícula: 13/0129674
+Implementação de Algorítimo de genético
+Data: 19 de junho de 2017
+*/
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
